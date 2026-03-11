@@ -20,6 +20,26 @@ MGP/video-wall processors, DVI matrix systems, and other adapters.
   - target a single device
 - Real-time dashboard via WebSocket
 
+## Versioning and Releases
+
+- This repo uses semantic-style versions with pre-release tags while features are stabilizing.
+- Current tag: `v0.1.0-alpha.1`
+- Day-to-day changes go into `## [Unreleased]` in `CHANGELOG.md`.
+- When shipping:
+  1. move unreleased notes into a new version section
+  2. commit
+  3. tag and push
+
+Example:
+
+```bash
+git add -A
+git commit -m "release: v0.1.0"
+git tag -a v0.1.0 -m "v0.1.0"
+git push
+git push origin v0.1.0
+```
+
 ## Run
 
 ```bash
@@ -86,4 +106,3 @@ This split keeps orchestration rules separate from UI and adapters.
    - ack tracking
    - latency metrics
    - command replay on reconnect
-
