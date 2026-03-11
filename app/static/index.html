@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TextGrid Orchestrator</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>TEXTGRID ORCHESTRATOR</h1>
+          <p class="subtitle">master clock and command hub</p>
+        </div>
+        <div class="health" id="healthBadge">offline</div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="config">CONFIG</button>
+        <button class="tab" data-tab="live">LIVE</button>
+        <button class="tab" data-tab="commands">COMMANDS</button>
+      </nav>
+
+      <main>
+        <section class="panel active" id="tab-config">
+          <div class="panel-head">
+            <h2>Device Configuration</h2>
+            <span id="deviceCount">0 / 25</span>
+          </div>
+
+          <form id="deviceForm" class="grid-form">
+            <input id="name" placeholder="Device name" required />
+            <input id="deviceType" placeholder="Type (MGP, TextGrid, Matrix, etc)" value="generic" required />
+            <select id="transport">
+              <option value="osc">OSC</option>
+              <option value="websocket">WebSocket</option>
+              <option value="http">HTTP</option>
+              <option value="tcp">TCP</option>
+              <option value="midi">MIDI</option>
+              <option value="other">Other</option>
+            </select>
+            <input id="endpoint" placeholder="Endpoint/IP (optional)" />
+            <select id="syncMode">
+              <option value="follow">Follow Master</option>
+              <option value="independent">Independent</option>
+            </select>
+            <button type="submit">Add Device</button>
+          </form>
+
+          <div class="table-wrap">
+            <table id="deviceTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Transport</th>
+                  <th>Endpoint</th>
+                  <th>Sync</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="tab-live">
+          <div class="panel-head">
+            <h2>Live State</h2>
+            <span id="revisionLabel">rev 0</span>
+          </div>
+
+          <div class="live-grid">
+            <div class="card">
+              <h3>Global Visual State</h3>
+              <p><strong>Grid:</strong> <span id="liveGrid">-</span></p>
+              <p><strong>Preset:</strong> <span id="livePreset">-</span></p>
+              <p><strong>Blanked Cells:</strong> <span id="liveBlank">[]</span></p>
+            </div>
+            <div class="card">
+              <h3>Online Devices</h3>
+              <p><strong>Total:</strong> <span id="liveDeviceTotal">0</span></p>
+              <p><strong>Online:</strong> <span id="liveDeviceOnline">0</span></p>
+              <p><strong>Offline:</strong> <span id="liveDeviceOffline">0</span></p>
+            </div>
+          </div>
+
+          <div class="card command-log-card">
+            <h3>Recent Commands</h3>
+            <ul id="commandLog"></ul>
+          </div>
+        </section>
+
+        <section class="panel" id="tab-commands">
+          <div class="panel-head">
+            <h2>Command Console</h2>
+            <span>broadcast or target a device</span>
+          </div>
+
+          <form id="commandForm" class="grid-form">
+            <select id="commandTarget">
+              <option value="broadcast">Broadcast to all</option>
+            </select>
+            <select id="cmdGrid">
+              <option value="">Grid (no change)</option>
+              <option value="1x1">1x1</option>
+              <option value="2x2">2x2</option>
+              <option value="3x3">3x3</option>
+              <option value="3x4">3x4</option>
+              <option value="4x4">4x4</option>
+            </select>
+            <input id="cmdPreset" placeholder="Preset (e.g. Corners, X, Outer Ring)" />
+            <input id="cmdBlank" placeholder="Blank cells CSV (e.g. 2,5,8)" />
+            <input id="cmdUnblank" placeholder="Unblank cells CSV" />
+            <input id="cmdNote" placeholder="Note (optional)" />
+            <button type="submit">Send Command</button>
+          </form>
+
+          <div class="card">
+            <h3>Phase-2 Hooks Ready</h3>
+            <ul class="feature-list">
+              <li>Scene scripting with per-scene dwell times</li>
+              <li>Clock source abstraction (internal, tap, MIDI, OSC)</li>
+              <li>Sparse/full density alternation rules</li>
+              <li>Per-device sync policies and offsets</li>
+              <li>Ack/latency telemetry dashboard</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
